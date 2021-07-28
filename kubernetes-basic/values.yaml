@@ -1,0 +1,15 @@
+name: todolist-cdng
+replicas: 2
+image: <+artifact.image>
+dockercfg: <+artifact.imagePullSecret>
+
+createNamespace: true
+namespace: <+infra.namespace>
+
+
+env:
+  config:
+    key1: harnessDemo
+  secrets:
+    key2: thisSecret
+
