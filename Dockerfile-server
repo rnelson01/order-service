@@ -1,0 +1,18 @@
+# Pull base image
+From tomcat:8-jre8
+
+MAINTAINER "Anubhaw <anubhaw@wings.software"
+
+COPY ./newrelic-java-5.3.0.tar.gz /usr/local/
+RUN tar -zxvf /usr/local/newrelic-java-5.3.0.tar.gz -C /usr/local/
+
+COPY ./AppServerAgent-4.3.8.0.zip /usr/local/
+RUN mkdir /usr/local/AppServerAgent-4.3.8.0
+RUN unzip /usr/local/AppServerAgent-4.3.8.0.zip -d /usr/local/AppServerAgent-4.3.8.0
+
+COPY ./dd-java-agent.zip /usr/local/
+RUN mkdir /usr/local/datadog-agent
+RUN unzip /usr/local/dd-java-agent.zip
+
+# Copy to images tomcat path
+COPY target/todolist.war /usr/local/tomcat/webapps/todolist.war

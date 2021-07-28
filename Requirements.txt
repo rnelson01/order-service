@@ -1,0 +1,19 @@
+概要：
+做一个管理todo list的web app.
+
+必要功能：
+>> 实现用户注册，登陆
+>> 实现用户登陆后，查看自己的所有的todo list.
+>> 实现登陆后对todo项目的添加、修改、查询、删除操作.
+
+加分功能（可选）：
+>> 该webapp可以使用基本servlet&jsp、jdbc实现
+>> 实现显示todo list时的分页功能
+>> 给todo项增加优先级属性
+>> 可以自由发挥创意实现更多功能
+
+提交
+>> 使用maven做项目管理，提交之前运行maven clean，请不要提交jar、war等文件
+>> 保证在无任何配置情况下在根目录下运行mvn tomcat:run可以成功启动app, 可以参考spring samples.
+>> 用zip打包提交，如有任何说明可以在根目录下新建README文件
+>> 在网络学堂提交压缩包文件。
