@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: CONFIG_FILE
+checksum: 8c703e1b2165dfa947680b80c5371c74
+checksumType: MD5
+encrypted: false
+fileName: configs_Abundantia.properties
+targetFilePath: configs/Abundantia.properties
+targetToAllEnv: false

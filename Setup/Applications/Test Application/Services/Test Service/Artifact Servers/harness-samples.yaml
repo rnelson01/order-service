@@ -1,0 +1,7 @@
+harnessApiVersion: '1.0'
+type: JENKINS
+artifactPaths:
+  - echo/target/echo.war
+jobName: harness-samples
+metadataOnly: false
+serverName: Harness Jenkins

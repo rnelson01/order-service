@@ -1,0 +1,17 @@
+harnessApiVersion: '1.0'
+type: AWS_SSH
+computeProviderName: Aws test
+computeProviderType: AWS
+connectionType: Dev Test Key
+deploymentType: SSH
+desiredCapacity: 0
+infraMappingType: AWS_SSH
+provisionInstances: false
+region: us-east-1
+serviceName: Test Service
+tags:
+  - name: Purpose
+    value: test
+  - name: User
+    value: rathna
+usePublicDns: true

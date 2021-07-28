@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: SMTP
+fromAddress: support@harness.io
+host: smtp.gmail.com
+password: safeharness:_b0pnrCjQkGcT9e2c8A1JA
+port: 465
+useSSL: true
+username: support@harness.io

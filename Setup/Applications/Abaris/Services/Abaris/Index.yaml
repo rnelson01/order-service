@@ -1,0 +1,4 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: WAR
+description: simply dummy text of the printing and ty

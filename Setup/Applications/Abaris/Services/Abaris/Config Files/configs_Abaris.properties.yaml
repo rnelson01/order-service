@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: CONFIG_FILE
+checksum: a3e3f71a149e9292167ae8f4d37db799
+checksumType: MD5
+encrypted: false
+fileName: configs_Abaris.properties
+targetFilePath: configs/Abaris.properties
+targetToAllEnv: false

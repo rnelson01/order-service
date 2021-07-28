@@ -1,0 +1,5 @@
+harnessApiVersion: '1.0'
+type: NEXUS
+password: safeharness:uolFL_IJRF27TnVRmtFr1g
+url: https://nexus.wings.software
+username: admin

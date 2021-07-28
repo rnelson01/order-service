@@ -1,0 +1,5 @@
+harnessApiVersion: '1.0'
+type: DOCKER
+password: safeharness:20zoUVEKThW7vTZaujnhtg
+url: https://registry.hub.docker.com/v2/
+username: wingsplugins
