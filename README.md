@@ -1,6 +1,7 @@
 # todolist
 
 todolist is a simple app written in Java
+CICDCG
 
 
 ## Requirements
