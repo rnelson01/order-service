@@ -1,6 +1,6 @@
 # todolist
 
-todolist is a simple app written in Java!
+todolist is a simple app written in Java
 
 
 ## Requirements
