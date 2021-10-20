@@ -10,6 +10,13 @@
   <properties>
     <app.home>/opt/todlist/</app.home>
   </properties> 
+  <repositories>
+    <repository>
+      <id>jitpack</id>
+      <name>jitpack</name>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
   <dependencies>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -121,7 +128,7 @@
     <dependency>
       <groupId>io.harness</groupId>
       <artifactId>ff-java-server-sdk</artifactId>
-      <version>0.0.7</version>
+      <version>1.0.4</version>
     </dependency>
 
   </dependencies>
