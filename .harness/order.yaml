@@ -50,24 +50,47 @@ pipeline:
                                         limits:
                                             memory: 5G
                                             cpu: "1"
-                          - step:
-                                type: Run
-                                name: Unit Test
-                                identifier: Unit_Test
-                                spec:
-                                    connectorRef: account.Harness_Docker_Connector
-                                    image: maven:3.5.2-jdk-8
-                                    command: mvn test
-                                    privileged: false
-                                    reports:
-                                        type: JUnit
-                                        spec:
-                                            paths:
-                                                - "**/**/*.xml"
-                                    resources:
-                                        limits:
-                                            memory: 2G
-                                            cpu: "1"
+                          - parallel:
+                                - step:
+                                      type: Run
+                                      name: Unit Test
+                                      identifier: Unit_Test
+                                      spec:
+                                          connectorRef: account.Harness_Docker_Connector
+                                          image: maven:3.5.2-jdk-8
+                                          command: mvn test
+                                          privileged: false
+                                          reports:
+                                              type: JUnit
+                                              spec:
+                                                  paths:
+                                                      - "**/**/*.xml"
+                                          resources:
+                                              limits:
+                                                  memory: 2G
+                                                  cpu: "1"
+                                - step:
+                                      type: RunTests
+                                      name: test intel
+                                      identifier: test_intel
+                                      spec:
+                                          connectorRef: account.Harness_Docker_Connector
+                                          image: maven
+                                          language: Java
+                                          buildTool: Maven
+                                          args: test
+                                          packages: io.harnes.
+                                          runOnlySelectedTests: true
+                                - step:
+                                      type: Run
+                                      name: scan
+                                      identifier: scan
+                                      spec:
+                                          connectorRef: account.Harness_Docker_Connector
+                                          image: clucca13/zn:latest
+                                          command: |-
+                                              mkdir /tmp/zn-snyk-scan
+                                              /opt/zeronorth/zn_cli_ubuntu2004_20210409 --api_key <+secrets.getValue("zntoken")> --code_path . --results_path /tmp/zn-snyk-scan --policy_id T_VGuJAWTB6SodGP5C_cCg
                           - parallel:
                                 - step:
                                       type: BuildAndPushGCR
