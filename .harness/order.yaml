@@ -81,6 +81,10 @@ pipeline:
                                           args: test
                                           packages: io.harnes.
                                           runOnlySelectedTests: true
+                                          resources:
+                                              limits:
+                                                  memory: 2G
+                                                  cpu: "1"
                           - parallel:
                                 - step:
                                       type: BuildAndPushGCR
