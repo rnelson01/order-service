@@ -85,6 +85,11 @@ pipeline:
                                           args: test
                                           packages: io.harnes.
                                           runOnlySelectedTests: true
+                                          reports:
+                                              type: JUnit
+                                              spec:
+                                                  paths:
+                                                      - "**/**/*.xml"
                                           resources:
                                               limits:
                                                   memory: 2G
