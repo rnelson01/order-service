@@ -40,7 +40,7 @@ pipeline:
                                 name: build WAR
                                 identifier: build
                                 spec:
-                                    connectorRef: harnessImage
+                                    connectorRef: account.Harness_Docker_Connector
                                     image: maven:3.5.2-jdk-8
                                     command: |-
                                         #cd order-service
@@ -55,7 +55,7 @@ pipeline:
                                 name: Unit Test
                                 identifier: Unit_Test
                                 spec:
-                                    connectorRef: harnessImage
+                                    connectorRef: account.Harness_Docker_Connector
                                     image: maven:3.5.2-jdk-8
                                     command: mvn test
                                     privileged: false
@@ -100,7 +100,7 @@ pipeline:
                                 name: Trigger Deploy
                                 identifier: Deploy
                                 spec:
-                                    connectorRef: harnessImage
+                                    connectorRef: account.Harness_Docker_Connector
                                     image: appropriate/curl
                                     command: |
                                         set +xv
@@ -120,7 +120,6 @@ pipeline:
                                 failureStrategies: []
                   sharedPaths:
                       - /root/.m2/repository
-              variables: []
     variables:
         - name: CDCG_Application
           type: String
