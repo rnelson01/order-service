@@ -11,23 +11,129 @@ pipeline:
                 build: <+input>
     stages:
         - stage:
-              name: build
-              identifier: build
+              name: Build
+              identifier: Build
               type: CI
               spec:
                   cloneCodebase: true
                   infrastructure:
                       type: KubernetesDirect
                       spec:
-                          connectorRef: account.gcpsalescidemo
+                          connectorRef: demoCluster
                           namespace: build
                   execution:
                       steps:
                           - step:
-                                type: Run
-                                name: test
-                                identifier: test
+                                type: RestoreCacheGCS
+                                name: Restore Cache
+                                identifier: Restore_Cache
                                 spec:
-                                    connectorRef: account.Harness_Docker_Connector
-                                    image: ubuntu:latest
-                                    command: echo echo
+                                    connectorRef: account.SalesGCP
+                                    bucket: cache-demo
+                                    key: order-service-{{ checksum "pom.xml" }}
+                                    archiveFormat: Tar
+                                when:
+                                    stageStatus: Success
+                                failureStrategies: []
+                          - step:
+                                type: Run
+                                name: build WAR
+                                identifier: build
+                                spec:
+                                    connectorRef: harnessImage
+                                    image: maven:3.5.2-jdk-8
+                                    command: |-
+                                        #cd order-service
+                                        mvn compile war:war
+                                    privileged: true
+                                    resources:
+                                        limits:
+                                            memory: 5G
+                                            cpu: "1"
+                          - step:
+                                type: Run
+                                name: Unit Test
+                                identifier: Unit_Test
+                                spec:
+                                    connectorRef: harnessImage
+                                    image: maven:3.5.2-jdk-8
+                                    command: mvn test
+                                    privileged: false
+                                    reports:
+                                        type: JUnit
+                                        spec:
+                                            paths:
+                                                - "**/**/*.xml"
+                                    resources:
+                                        limits:
+                                            memory: 2G
+                                            cpu: "1"
+                          - parallel:
+                                - step:
+                                      type: BuildAndPushGCR
+                                      name: Build and Push to GCR
+                                      identifier: Build_and_Push_to_GCR
+                                      spec:
+                                          connectorRef: account.SalesGCP
+                                          host: us.gcr.io
+                                          projectID: sales-209522
+                                          imageName: order-service/todolist-sample
+                                          tags:
+                                              - <+pipeline.sequenceId>
+                                          optimize: true
+                                      when:
+                                          stageStatus: Success
+                                      failureStrategies: []
+                                - step:
+                                      type: SaveCacheGCS
+                                      name: save cache to GCS
+                                      identifier: save_cache_to_GCS
+                                      spec:
+                                          connectorRef: account.SalesGCP
+                                          bucket: cache-demo
+                                          key: order-service-{{ checksum "pom.xml" }}
+                                          sourcePaths:
+                                              - /root/.m2/repository
+                                          archiveFormat: Tar
+                          - step:
+                                type: Run
+                                name: Trigger Deploy
+                                identifier: Deploy
+                                spec:
+                                    connectorRef: harnessImage
+                                    image: appropriate/curl
+                                    command: |
+                                        set +xv
+                                        deploy_state=$(curl -X POST -H 'content-type: application/json' --url https://app.harness.io/gateway/api/webhooks/<+pipeline.variables.CDCG_Webhook>accountId=<+pipeline.variables.CDCG_Account> -d '{"application":"<+pipeline.variables.CDCG_Application>" ,"artifacts":[{"artifactSourceName":"<+pipeline.variables.CDCG_Sourcename>","service":"<+pipeline.variables.CDCG_Service>","buildNumber":"<+pipeline.sequenceId>"}]}')
+                                        export deploy_request_id="$(echo $deploy_state | cut -d '"' -f4)"
+                                        export deploy_url="$(echo $deploy_state | cut -d '"' -f14)"
+                                        export deploy_status="$(echo $deploy_state | cut -d '"' -f8)"
+                                        echo  -e "deployment status: \033[32;5;7m $deploy_status\033[0m"
+                                        echo -e "\033[36;7mDEPLOYMENT URL:\033[0m"
+                                        echo $deploy_url
+                                    privileged: true
+                                    outputVariables:
+                                        - name: deploy_url
+                                        - name: deploy_request_id
+                                when:
+                                    stageStatus: Success
+                                failureStrategies: []
+                  sharedPaths:
+                      - /root/.m2/repository
+              variables: []
+    variables:
+        - name: CDCG_Application
+          type: String
+          value: Qx4XDi7eQAynspJX2S0Ndw
+        - name: CDCG_Service
+          type: String
+          value: order-service
+        - name: CDCG_Account
+          type: String
+          value: Sy3KVuK1SZy2Z7OLhbKlNg
+        - name: CDCG_Webhook
+          type: String
+          value: FS9CNzs9OIfg9IngQ7oPznf364WWj5J82d1EYIN8?
+        - name: CDCG_Sourcename
+          type: String
+          value: harness/todolist-sample (order-service)
