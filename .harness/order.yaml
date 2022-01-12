@@ -75,7 +75,7 @@ pipeline:
                                       identifier: test_intel
                                       spec:
                                           connectorRef: account.Harness_Docker_Connector
-                                          image: maven
+                                          image: maven:3.5.2-jdk-8
                                           language: Java
                                           buildTool: Maven
                                           args: test
