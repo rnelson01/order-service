@@ -19,7 +19,7 @@ pipeline:
                   infrastructure:
                       type: KubernetesDirect
                       spec:
-                          connectorRef: demoCluster
+                          connectorRef: account.gcpsalescidemo
                           namespace: build
                   execution:
                       steps:
