@@ -19,7 +19,7 @@ pipeline:
                   infrastructure:
                       type: KubernetesDirect
                       spec:
-                          connectorRef: account.gcpsalescidemo
+                          connectorRef: platform
                           namespace: build
                   execution:
                       steps:
