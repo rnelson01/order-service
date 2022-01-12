@@ -13,3 +13,8 @@ template:
             connectorRef: account.Harness_Docker_Connector
             image: ubuntu:latest
             command: scan scan scan
+            reports:
+                type: JUnit
+                spec:
+                    paths:
+                        - "**/**/*.xml"
