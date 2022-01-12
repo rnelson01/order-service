@@ -1,0 +1,12 @@
+connector:
+  name: platform
+  identifier: platform
+  description:
+  orgIdentifier: default
+  projectIdentifier: core_team
+  type: K8sCluster
+  spec:
+    credential:
+      type: InheritFromDelegate
+    delegateSelectors:
+    - platform
