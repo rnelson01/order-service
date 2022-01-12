@@ -1,0 +1,15 @@
+template:
+    name: scan
+    identifier: scan
+    versionLabel: Version1
+    type: Step
+    projectIdentifier: core_team
+    orgIdentifier: default
+    tags: {}
+    spec:
+        type: Run
+        description: scan template
+        spec:
+            connectorRef: account.Harness_Docker_Connector
+            image: ubuntu:latest
+            command: scan scan scan
