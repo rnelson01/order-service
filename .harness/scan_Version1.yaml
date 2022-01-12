@@ -18,3 +18,5 @@ template:
                 spec:
                     paths:
                         - "**/**/*.xml"
+            envVariables:
+                api_key: api_key
