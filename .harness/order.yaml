@@ -94,6 +94,18 @@ pipeline:
                                               limits:
                                                   memory: 2G
                                                   cpu: "1"
+                                - step:
+                                      type: Run
+                                      name: scan
+                                      identifier: scan
+                                      spec:
+                                          connectorRef: account.Harness_Docker_Connector
+                                          image: clucca13/zn:latest
+                                          command: "mkdir /tmp/zn-snyk-scan
+
+                                              /opt/zeronorth/zn_cli_ubuntu2004_20210409 --api_key <+secrets.getValue(\"zntoken\")> --code_path . --results_path /tmp/zn-snyk-scan --policy_id T_VGuJAWTB6SodGP5C_cCg
+
+                                              \           "
                           - parallel:
                                 - step:
                                       type: BuildAndPushGCR
