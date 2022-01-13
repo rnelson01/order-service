@@ -16,4 +16,5 @@ template:
 
                 \           "
             envVariables:
-                policy: clucca13/zn:latest
+                policy: <+input>
+                resultPath: <+input>
