@@ -1,5 +1,5 @@
 template:
-    name: New Step Name
+    name: snyk scan
     identifier: new_step_name
     versionLabel: Version1
     type: Step
@@ -18,3 +18,4 @@ template:
             envVariables:
                 policy: <+input>
                 resultPath: <+input>
+    tags: {}
