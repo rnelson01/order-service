@@ -21,7 +21,7 @@ pipeline:
                       type: KubernetesDirect
                       spec:
                           connectorRef: account.mansong_gke
-                          namespace: build
+                          namespace: harness-build
                   execution:
                       steps:
                           - step:
