@@ -20,7 +20,7 @@ pipeline:
                   infrastructure:
                       type: KubernetesDirect
                       spec:
-                          connectorRef: account.cidemoact
+                          connectorRef: account.mansong_gke
                           namespace: build
                   execution:
                       steps:
