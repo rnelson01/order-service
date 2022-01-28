@@ -1,0 +1,34 @@
+pipeline:
+    name: java
+    identifier: java
+    projectIdentifier: rntest
+    orgIdentifier: default
+    tags: {}
+    properties:
+        ci:
+            codebase:
+                connectorRef: rngit
+                repoName: order-service
+                build: <+input>
+    stages:
+        - stage:
+              name: Build
+              identifier: Build
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                          connectorRef: account.cidemoact
+                          namespace: build
+                  execution:
+                      steps:
+                          - step:
+                                type: Run
+                                name: run
+                                identifier: run
+                                spec:
+                                    connectorRef: account.james_dockerhub
+                                    image: docker:dind
+                                    command: echo "hello"
